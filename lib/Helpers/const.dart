@@ -24,6 +24,8 @@ class Cons {
   ////// Colors
 
   static int mainColor = 0xff0389ED;
+  static int orangeColor = 0xff9D7A68;
+  static int whiteColor = 0xffffffff;
 
   ///  regex
   static String emailRegex = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';

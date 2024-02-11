@@ -11,11 +11,12 @@ class MyWidgets {
     // double screenWidth = MediaQuery.of(context).size.width;
     // double screenHeight = MediaQuery.of(context).size.height;
     return Positioned.fill(
-      left: 0.0,
-      right: 0.0,
-      bottom: -30,
-      child: ColoredBox(color: Colors.white,)
-    );
+        left: 0.0,
+        right: 0.0,
+        bottom: -30,
+        child: ColoredBox(
+          color: Color(0xffA9BCCB),
+        ));
   }
 
   Widget addTitleTextView(String title) {
@@ -23,8 +24,9 @@ class MyWidgets {
       title,
       textAlign: TextAlign.center,
       style: const TextStyle(
-        color: Color(0xFF0389ED),
-        fontSize: 28,
+        color: Color(0xFFFFFFFF),
+        letterSpacing: 8.0,
+        fontSize: 26,
         fontFamily: 'Cairo',
         fontWeight: FontWeight.w600,
         height: 0.03,
@@ -164,10 +166,10 @@ class MyWidgets {
       child: Container(
         width: double.infinity,
         decoration: ShapeDecoration(
-          gradient: const LinearGradient(
+          gradient: LinearGradient(
             begin: Alignment(1.00, 0.00),
             end: Alignment(-1, 0),
-            colors: [Color(0xFF0086EC), Color(0xFF6BECEC)],
+            colors: [Color(Cons.orangeColor), Color(Cons.orangeColor)],
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),

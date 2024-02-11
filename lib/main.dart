@@ -1,4 +1,4 @@
-import 'package:camel_trace/views/login.dart';
+import 'package:camel_trace/views/auth.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Login(title: "login"),
+      home: const Auth(title: "login"),
     );
   }
 }
