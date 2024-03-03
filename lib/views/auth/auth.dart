@@ -1,8 +1,9 @@
 import 'package:camel_trace/Helpers/const.dart';
-import 'package:camel_trace/views/login_view.dart';
-import 'package:camel_trace/views/signup_view.dart';
+import 'package:camel_trace/views/auth/login_view.dart';
+import 'package:camel_trace/views/auth/signup_view.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import '../../Helpers/my_widgets.dart';
+import '../../../Helpers/my_widgets.dart';
 
 class Auth extends StatefulWidget {
   const Auth({
@@ -17,7 +18,6 @@ class Auth extends StatefulWidget {
 class _AuthState extends State<Auth> {
   var screenWidth = 0.0, screenHeight = 0.0;
   var isLogin = true;
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,7 @@ class _AuthState extends State<Auth> {
                   ]),
             )),
         Positioned.fill(
-          top: 300,
+          top: 250,
           bottom: 0.0,
           left: 0.0,
           right: 0.0,
@@ -100,18 +100,11 @@ class _AuthState extends State<Auth> {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 5),
             alignment: Alignment.center,
-            child: Form(
-              key: _formKey,
-              child: SingleChildScrollView(
-                  child: isLogin ? const LoginView() : const SignupView()),
-            ),
+            child: SingleChildScrollView(
+                child: isLogin ? const LoginView() : const SignupView()),
           ),
         ),
       ]),
     );
-  }
-
-  void fLogin() {
-    if (_formKey.currentState!.validate()) {}
   }
 }

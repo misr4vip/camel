@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "920354078943",
+    "project_id": "camel-track",
+    "storage_bucket": "camel-track.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920354078943:android:2557588273c00cd5cd296a",
+        "android_client_info": {
+          "package_name": "com.example.camel_trace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClCsrhih0CEEjJ9mvn151kRrSS1FpCc4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

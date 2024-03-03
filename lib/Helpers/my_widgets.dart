@@ -4,6 +4,8 @@ import 'package:camel_trace/Helpers/const.dart';
 import 'package:camel_trace/Helpers/gradianbuttonborder.dart';
 import 'package:flutter/material.dart';
 
+import 'gradiantext.dart';
+
 class MyWidgets {
   MyWidgets({required this.context});
   final BuildContext context;

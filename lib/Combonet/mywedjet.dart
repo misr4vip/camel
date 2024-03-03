@@ -3,6 +3,8 @@ import 'package:camel_trace/Helpers/const.dart';
 import 'package:camel_trace/Combonet/gredent.dart';
 import 'package:camel_trace/Combonet/unicornOutLineButton.dart';
 
+import '../Helpers/gradiantext.dart';
+
 class MyWidgets {
   MyWidgets({required this.context});
   final BuildContext context;
