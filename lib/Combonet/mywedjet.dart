@@ -136,7 +136,27 @@ class MyWidgets {
       ),
     );
   }
-
+Widget regularEditText(TextEditingController controller,String title,{IconData icon = Icons.abc}){
+ return Padding(
+      padding: const EdgeInsets.only(left: 30, right: 30),
+      child: TextFormField(
+        validator: (value) {
+          if (value!.isEmpty || value.length < 3) {
+            return "name should at least  have 3 letters.";
+          }
+          return null;
+        },
+        controller: controller,
+        decoration:  InputDecoration(
+          labelText: title,
+          prefixIcon: Padding(
+            padding:
+            const EdgeInsets.only(top: 5), // add padding to adjust icon
+            child: Icon(icon),
+          ),
+        ),
+      ));
+}
   showAlertDialog(
       BuildContext context, String message, VoidCallback onOKPressed) {
     // set up the button

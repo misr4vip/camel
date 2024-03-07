@@ -1,12 +1,12 @@
 import 'package:camel_trace/Helpers/const.dart';
-import 'package:camel_trace/Helpers/my_widgets.dart';
 import 'package:camel_trace/modles/UserModel.dart';
 import 'package:camel_trace/views/owner_main_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../Combonet/mywedjet.dart';
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
@@ -29,131 +29,31 @@ class _SignupState extends State<SignupView> {
     return Form(
       key: _formKey,
       child: Column(children: [
-        Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30),
-            child: TextFormField(
-              validator: (value) {
-                if (value!.isEmpty || value.length < 6) {
-                  return "Phone number must be at least 12 characters long";
-                }
-                // else if (!RegExp(
-                //         "^[+]?[(]?[0-9]{1,4}[)]?[ -]?[0-9]{1,6}[ ]?[0-9]{1,6}")
-                //     .hasMatch(value)) {
-                //   return "Invalid format of the phone number";
-                // }
-                return null;
-              },
-              controller: emailController,
-              decoration: const InputDecoration(
-                labelText: "email",
-                prefixIcon: Padding(
-                  padding:
-                      EdgeInsets.only(top: 5), // add padding to adjust icon
-                  child: Icon(Icons.email_outlined),
-                ),
-              ),
-            )),
+       h.regularEditText(emailController, "email"),
         const SizedBox(height: 18),
-        Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30),
-            child: TextFormField(
-              validator: (value) {
-                if (value!.isEmpty || value.length < 6) {
-                  return "Phone number must be at least 12 characters long";
-                }
-                // else if (!RegExp(
-                //         "^[+]?[(]?[0-9]{1,4}[)]?[ -]?[0-9]{1,6}[ ]?[0-9]{1,6}")
-                //     .hasMatch(value)) {
-                //   return "Invalid format of the phone number";
-                // }
-                return null;
-              },
-              controller: phoneController,
-              decoration: const InputDecoration(
-                labelText: "Phone number",
-                prefixIcon: Padding(
-                  padding:
-                      EdgeInsets.only(top: 5), // add padding to adjust icon
-                  child: Icon(Icons.phone),
-                ),
-              ),
-            )),
+      h.regularEditText(phoneController, "Phone number"),
         const SizedBox(height: 18),
-        Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30),
-            child: TextFormField(
-              validator: (value) {
-                if (value!.isEmpty || value.length < 3) {
-                  return "name should at least  have 3 letters.";
-                }
-                return null;
-              },
-              controller: nameController,
-              decoration: const InputDecoration(
-                labelText: "owner name",
-                prefixIcon: Padding(
-                  padding:
-                      EdgeInsets.only(top: 5), // add padding to adjust icon
-                  child: Icon(Icons.person),
-                ),
-              ),
-            )),
+        h.regularEditText(nameController, "owner name"),
         const SizedBox(height: 18),
-        Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30),
-            child: TextFormField(
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "field is required";
-                } else if (value.length < 6) {
-                  return "password length is less than 6 letter";
-                }
-                return null;
-              },
-              obscureText: true,
-              controller: passwordController,
-              decoration: const InputDecoration(
-                labelText: "password",
-                prefixIcon: Padding(
-                  padding:
-                      EdgeInsets.only(top: 5), // add padding to adjust icon
-                  child: Icon(Icons.lock),
-                ),
-              ),
-            )),
+       h.regularEditText(passwordController, "password"),
         const SizedBox(
           height: 18,
         ),
-        Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30),
-            child: TextFormField(
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "field is required";
-                } else if (value.length < 6) {
-                  return "password length is less than 6 letter";
-                }
-                return null;
-              },
-              obscureText: true,
-              controller: rePasswordController,
-              decoration: const InputDecoration(
-                labelText: "confirm password",
-                prefixIcon: Padding(
-                  padding:
-                      EdgeInsets.only(top: 5), // add padding to adjust icon
-                  child: Icon(Icons.password_outlined),
-                ),
-              ),
-            )),
+       h.regularEditText(rePasswordController, "confirm password"),
         const SizedBox(height: 18),
         h.addButton(Cons.signUp, () {
           f().then((value) => {
-            createUser(value[true]).then((value) => {
+            createUser(value[true]).then((value)  {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => const OwnerMain()))
-            }).onError((error, stackTrace) => showAlert(error.toString()))
-          }).onError((error, stackTrace) => showAlert(error.toString()));
+                  .push(MaterialPageRoute(builder: (context) => const OwnerMain()));
+            }).onError((error, stackTrace) {
+              h.showAlertDialog(context, error.toString(), () {
+                Navigator.of(context).pop();
+              });
+            })
+          }).onError((error, stackTrace) =>  h.showAlertDialog(context, error.toString(), () {
+            Navigator.of(context).pop();
+          }));
         }),
       ]),
     );
@@ -202,18 +102,7 @@ class _SignupState extends State<SignupView> {
     return result;
   }
 
-   showAlert(String message) {
-    return showDialog(
-      //if set to true allow to close popup by tapping out of the popup
-      barrierDismissible: true,
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text("Information"),
-        content: Text(message),
-        elevation: 24,
-      ),
-    );
-  }
+
 }
 
 // await FirebaseAuth.instance.verifyPhoneNumber(

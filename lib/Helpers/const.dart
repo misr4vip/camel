@@ -14,6 +14,7 @@ class Cons {
   static String next = "Next";
   static String optional = "Optional";
   static String signUp = 'Sign up';
+  static String save = "Save";
 
 
   static String thisFieldRequired = 'this Field required';
@@ -26,6 +27,9 @@ class Cons {
   static int mainColor = 0xff0389ED;
   static int orangeColor = 0xff9D7A68;
   static int whiteColor = 0xffffffff;
+  static int backGroundColor = 0xff96C7D3;
+  static int btnColor = 0xffDAAA79;
+  static int btnSecondaryColor = 0xffC38388;
 
   ///  regex
   static String emailRegex = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';

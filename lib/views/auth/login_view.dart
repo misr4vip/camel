@@ -1,11 +1,11 @@
 import 'package:camel_trace/Helpers/const.dart';
-import 'package:camel_trace/Helpers/my_widgets.dart';
+
 import 'package:camel_trace/modles/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import '../../Combonet/mywedjet.dart';
 import '../owner_main_view.dart';
 
 class LoginView extends StatefulWidget {
@@ -21,51 +21,13 @@ class _LoginViewState extends State<LoginView> {
   final _formKey =  GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    var h = MyWidgets(context: context);
+    var w = MyWidgets(context: context);
     return  Form(
         key: _formKey,
         child: Column(children: [
-          Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
-              child: TextFormField(
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "field is required";
-                  }else if (value.length < 6) {
-                    return "password length is less than 6 letter";
-                  }
-                  return null;
-                },
-                controller: userNameController,
-                decoration: const InputDecoration(
-                  labelText: "Phone number",
-                  prefixIcon: Padding(
-                    padding: EdgeInsets.only(top: 5), // add padding to adjust icon
-                    child: Icon(Icons.phone),
-                  ),
-                ),
-              )),
+         w.regularEditText(userNameController, "Phone number"),
           const SizedBox(height: 18),
-          Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
-              child: TextFormField(
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "field is required";
-                  }else if (value.length < 6) {
-                    return "password length is less than 6 letter";
-                  }
-                  return null;
-                },
-                controller: passwordController,
-                decoration: const InputDecoration(
-                  labelText: "password",
-                  prefixIcon: Padding(
-                    padding: EdgeInsets.only(top: 5), // add padding to adjust icon
-                    child: Icon(Icons.lock),
-                  ),
-                ),
-              )),
+          w.regularEditText(passwordController, "password"),
           const SizedBox(
             height: 18,
           ),
@@ -81,21 +43,26 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 )),
           ),
-          h.addButton(Cons.signIn, () async{
+          w.addButton(Cons.signIn, () async{
             if(_formKey.currentState!.validate()){
                 await FirebaseAuth.instance
                     .signInWithEmailAndPassword(email: userNameController.text, password: passwordController.text)
                     .then((value)  {
-                      getUserData(value.user!.uid);
+                      getUserData(value.user!.uid,context);
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) => const OwnerMain()));
-                }).onError((error, stackTrace) => showAlert(error!.toString()));
+                }).onError((error, stackTrace){
+                  w.showAlertDialog(context, error.toString(), () {
+                    Navigator.of(context).pop();
+                  });
+                });
             }
           }),
         ]),
       );
   }
-   getUserData(String id) {
+   getUserData(String id,BuildContext context) {
+    var w = MyWidgets(context: context);
     FirebaseDatabase.instance.ref().child("users").child(id).get().then((value)  {
       var object = value.value as Map;
       var user = UserModel.fromJson(object);
@@ -111,20 +78,11 @@ class _LoginViewState extends State<LoginView> {
 
 
     }).onError((error, stackTrace){
-      showAlert("error in getting data ${error.toString()}");
+      w.showAlertDialog(context, error.toString(), () {
+        Navigator.of(context).pop();
+      });
     });
 
   }
-  showAlert(String message) {
-    return showDialog(
-      //if set to true allow to close popup by tapping out of the popup
-      barrierDismissible: true,
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text("Information"),
-        content: Text(message),
-        elevation: 24,
-      ),
-    );
-  }
+
 }
