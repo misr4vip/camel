@@ -1,6 +1,7 @@
 import 'package:camel_trace/views/auth/auth.dart';
 import 'package:camel_trace/views/auth/profile.dart';
 import 'package:camel_trace/views/camel/camel_list.dart';
+import 'package:camel_trace/views/owner_main_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -77,7 +78,12 @@ class _HelperState extends State<Helper> {
                 children: [
                   const Icon(Icons.home, size: 32),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (userType == "owner") {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const OwnerMain()));
+                        }
+                      },
                       child: const Text("Main",
                           style: TextStyle(fontSize: 18, color: Colors.blue)))
                 ],
@@ -108,7 +114,10 @@ class _HelperState extends State<Helper> {
               padding: const EdgeInsets.only(left: 16.0),
               child: Row(
                 children: [
-                  const Icon(Icons.add_business_sharp),
+                  Image.asset(
+                    "images/camel.png",
+                    height: 32,
+                  ),
                   TextButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(

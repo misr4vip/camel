@@ -16,7 +16,8 @@ class ShepherdList extends StatefulWidget {
 
 class _ShepherdListState extends State<ShepherdList> {
   var ownerId = "";
-  var models = <ShepherdModel>[];
+  List<ShepherdModel> models = [];
+
   @override
   void initState() {
     SharedPreferences.getInstance().then((value) {
@@ -54,14 +55,14 @@ class _ShepherdListState extends State<ShepherdList> {
                     margin: const EdgeInsets.fromLTRB(2, 2, 2, 3),
                     child: ListTile(
                       leading: CircleAvatar(
-                        child: Text(models[index].name[0]),
+                        child: Text(models[index].name.substring(0, 1)),
                       ),
                       title: Text(models[index].name),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(models[index].identityId),
-                          Text(models[index].camelCounts),
+                          Text("camels count :${models[index].camelCounts}"),
                         ],
                       ),
                       trailing: IconButton(
@@ -107,7 +108,7 @@ class _ShepherdListState extends State<ShepherdList> {
   }
 
   getShepherdsData() {
-    var shepherds = [ShepherdModel.empty()];
+    List<ShepherdModel> shepherds = [];
     FirebaseDatabase.instance
         .ref()
         .child("shepherd")
@@ -133,7 +134,7 @@ class _ShepherdListState extends State<ShepherdList> {
   }
 
   updateShepherdsData() {
-    var shepherds = [ShepherdModel.empty()];
+    List<ShepherdModel> shepherds = [];
     FirebaseDatabase.instance
         .ref()
         .child("shepherd")

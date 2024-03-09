@@ -1,12 +1,12 @@
 class CamelModel {
-  String id = "";
-  String camelNumber = "";
-  String hardWareNumber = "";
-  String age = "";
-  String health = "";
-  String vaccination = "";
-  String price = "";
-  CamelModel.empty();
+  String id;
+  String camelNumber;
+  String hardWareNumber;
+  String age;
+  String health;
+  String vaccination;
+  String price;
+
   CamelModel({
     required this.id,
     required this.camelNumber,
@@ -29,7 +29,7 @@ class CamelModel {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  Map toJson() => {
         "id": id,
         "camelNumber": camelNumber,
         "hardWareNumber": hardWareNumber,

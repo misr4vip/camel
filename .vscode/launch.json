@@ -2,28 +2,12 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "camel",
-      "request": "launch",
-      "type": "dart"
-    },
-    {
-      "name": "camel (profile mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "profile"
-    },
-    {
-      "name": "camel (release mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "release"
-    },
-    {
-      "name": "Flutter (Windows)",
+      "name": "Flutter android debug",
       "program": "lib/main.dart",
-      "deviceId": "windows",
+      "deviceId": "emulator-5554",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "flutterMode": "debug"
     }
   ]
 }

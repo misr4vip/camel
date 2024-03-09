@@ -22,7 +22,7 @@ class MyWidgets {
     );
   }
 
-  Widget addLogoImage() {
+  Widget addLogoImage(String imagePath) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
@@ -30,7 +30,7 @@ class MyWidgets {
       width: screenWidth,
       height: screenHeight / 5,
       child: Image.asset(
-        "images/qatra.png",
+        imagePath,
       ),
     );
   }

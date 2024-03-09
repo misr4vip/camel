@@ -15,16 +15,17 @@ class CamelList extends StatefulWidget {
 
 class _CamelListState extends State<CamelList> {
   var ownerId = "";
-  var models = <CamelModel>[];
+  List<CamelModel> models = [];
   @override
   void initState() {
     SharedPreferences.getInstance().then((value) {
       setState(() {
         ownerId = value.getString("userId") ?? "";
+        models.clear();
+        getCamelsData();
       });
     });
-    models.clear();
-    getCamelsData();
+
     super.initState();
   }
 
@@ -54,14 +55,15 @@ class _CamelListState extends State<CamelList> {
                     margin: const EdgeInsets.fromLTRB(2, 2, 2, 3),
                     child: ListTile(
                       leading: CircleAvatar(
-                        child: Text(models[index].hardWareNumber),
+                        child: Text(models[index].camelNumber),
                       ),
-                      title: Text(models[index].camelNumber),
+                      title: Text(
+                          "Hardware Number: ${models[index].hardWareNumber}"),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(models[index].age),
-                          Text(models[index].price),
+                          Text("Age:${models[index].age}"),
+                          Text("price : ${models[index].price}"),
                         ],
                       ),
                       trailing: IconButton(
@@ -107,7 +109,7 @@ class _CamelListState extends State<CamelList> {
   }
 
   getCamelsData() {
-    var camelArray = [CamelModel.empty()];
+    List<CamelModel> camelArray = [];
     FirebaseDatabase.instance
         .ref()
         .child("camel")
@@ -117,18 +119,15 @@ class _CamelListState extends State<CamelList> {
       if (value.exists) {
         camelArray.clear();
         for (var element in value.children) {
-          for (var item in element.children) {
-            print(item.value);
-            camelArray.add(CamelModel.fromJson(item.value as Map));
-          }
+          var val = element.value as Map;
+          camelArray.add(CamelModel.fromJson(val));
         }
       }
       setState(() {
-        models.clear();
         models = camelArray;
       });
     }).onError((error, stackTrace) {
-      print("error in geting shepherd List ${error.toString()}");
+      print("error in geting camel List ${error.toString()}");
     });
   }
 }

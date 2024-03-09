@@ -1,10 +1,9 @@
 class ShepherdModel {
-  String id = "";
-  String name = "";
-  String identityId = "";
-  String camelCounts = "";
+  String id;
+  String name;
+  String identityId;
+  String camelCounts;
 
-  ShepherdModel.empty();
   ShepherdModel(
       {required this.id,
       required this.name,
