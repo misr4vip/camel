@@ -1,20 +1,19 @@
 import 'package:camel_trace/Combonet/my_widget.dart';
+import 'package:camel_trace/Helpers/const.dart';
+import 'package:camel_trace/Helpers/drawer_Widets.dart';
 import 'package:camel_trace/modles/shepherdModel.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uuid/uuid.dart';
-import '../../Helpers/const.dart';
-import '../../Helpers/drawer_Widets.dart';
 
-class AddShepherd extends StatefulWidget {
-  const AddShepherd({super.key});
-
+class EditShepherd extends StatefulWidget {
+  EditShepherd({required this.model, super.key});
+  ShepherdModel model;
   @override
-  State<AddShepherd> createState() => _AddShepherdState();
+  State<EditShepherd> createState() => _EditShepherdState();
 }
 
-class _AddShepherdState extends State<AddShepherd> {
+class _EditShepherdState extends State<EditShepherd> {
   var ownerId = "";
   var nameController = TextEditingController();
   var idController = TextEditingController();
@@ -24,6 +23,9 @@ class _AddShepherdState extends State<AddShepherd> {
     SharedPreferences.getInstance().then((value) {
       setState(() {
         ownerId = value.getString("userId") ?? "";
+        nameController.text = widget.model.name;
+        idController.text = widget.model.identityId;
+        numberOfCamelsController.text = widget.model.camelCounts;
       });
     });
     super.initState();
@@ -33,13 +35,15 @@ class _AddShepherdState extends State<AddShepherd> {
   Widget build(BuildContext context) {
     var w = MyWidgets(context: context);
     return Scaffold(
-      drawer: const Helper(),
       appBar: AppBar(),
+      drawer: const Helper(),
       body: Container(
         alignment: Alignment.center,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            w.addTitleTextView("Update Shpeherd"),
+            const SizedBox(height: 100),
             w.regularEditText(nameController, "shepherd name",
                 icon: Icons.person),
             const SizedBox(height: 18),
@@ -51,20 +55,17 @@ class _AddShepherdState extends State<AddShepherd> {
             const SizedBox(height: 18),
             ElevatedButton(
               onPressed: () {
-                var shepherdId = Uuid().v1();
-                var model = ShepherdModel(
-                    id: shepherdId,
-                    name: nameController.text,
-                    identityId: idController.text,
-                    camelCounts: numberOfCamelsController.text);
+                widget.model.camelCounts = numberOfCamelsController.text;
+                widget.model.identityId = idController.text;
+                widget.model.name = nameController.text;
                 FirebaseDatabase.instance
                     .ref()
                     .child("shepherd")
                     .child(ownerId)
-                    .child(shepherdId)
-                    .set(model.toJson())
+                    .child(widget.model.id)
+                    .set(widget.model.toJson())
                     .then((value) {
-                  w.showAlertDialog(context, "shepherd added successfully!",
+                  w.showAlertDialog(context, "shepherd Updated successfully!",
                       () {
                     Navigator.of(context).pop();
                     nameController.text = "";
@@ -85,7 +86,7 @@ class _AddShepherdState extends State<AddShepherd> {
                 textStyle:
                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              child: Text(Cons.save),
+              child: const Text("Update"),
             )
           ],
         ),

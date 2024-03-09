@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:camel_trace/Combonet/Staylle.dart';
 
 class serching extends StatelessWidget {
-  serching({
+  const serching({
     super.key,
   });
 
@@ -18,7 +18,7 @@ class serching extends StatelessWidget {
             color: Colors.white,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-            shadows: [
+            shadows: const [
               BoxShadow(
                 color: Color(0x1E000000),
                 blurRadius: 2,
@@ -51,7 +51,7 @@ class serching extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 8,
         ),
         Container(
@@ -62,7 +62,7 @@ class serching extends StatelessWidget {
             color: Colors.white,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-            shadows: [
+            shadows: const [
               BoxShadow(
                 color: Color(0x1E000000),
                 blurRadius: 2,
@@ -79,7 +79,7 @@ class serching extends StatelessWidget {
                   "ابحث",
                   style: h5,
                 ),
-                Icon(Icons.search)
+                const Icon(Icons.search)
               ],
             ),
           ),

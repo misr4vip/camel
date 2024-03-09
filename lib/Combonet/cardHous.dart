@@ -40,7 +40,7 @@ class CardH_Combonet extends StatelessWidget {
                           name,
                           style: h2black,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 12,
                         ),
                         Image.asset(
@@ -49,7 +49,7 @@ class CardH_Combonet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 18,
                     ),
                     Row(
@@ -62,7 +62,7 @@ class CardH_Combonet extends StatelessWidget {
                               condition,
                               style: h6,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
                             Text(
@@ -78,7 +78,7 @@ class CardH_Combonet extends StatelessWidget {
                               numberOfConsumers,
                               style: h6,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
                             Text(
@@ -89,7 +89,7 @@ class CardH_Combonet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 18,
                     ),
                     Row(
@@ -101,7 +101,7 @@ class CardH_Combonet extends StatelessWidget {
                               period,
                               style: h6,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
                             Text(
@@ -116,7 +116,7 @@ class CardH_Combonet extends StatelessWidget {
                               numberOfConsumers,
                               style: h6,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
                             Text(
@@ -127,7 +127,7 @@ class CardH_Combonet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 18,
                     ),
                     Row(
@@ -139,7 +139,7 @@ class CardH_Combonet extends StatelessWidget {
                               "تحديد تاريخ القدوم",
                               style: h2blue,
                             )),
-                        SizedBox(
+                        const SizedBox(
                           width: 12,
                         ),
                         InkWell(
@@ -151,7 +151,7 @@ class CardH_Combonet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 18,
                     ),
                     Row(
@@ -167,7 +167,7 @@ class CardH_Combonet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 18,
                     ),
                     Container(

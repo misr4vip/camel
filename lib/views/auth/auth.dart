@@ -1,9 +1,8 @@
+import 'package:camel_trace/Combonet/my_widget.dart';
 import 'package:camel_trace/Helpers/const.dart';
 import 'package:camel_trace/views/auth/login_view.dart';
 import 'package:camel_trace/views/auth/signup_view.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import '../../../Helpers/my_widgets.dart';
 
 class Auth extends StatefulWidget {
   const Auth({

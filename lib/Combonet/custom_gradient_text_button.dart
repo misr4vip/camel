@@ -12,7 +12,7 @@ class CustomGradientTextButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [Colors.white, Colors.white],
         ),
       ),
@@ -21,7 +21,7 @@ class CustomGradientTextButton extends StatelessWidget {
         // Add your onPressed logic here
 
         style: TextButton.styleFrom(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           backgroundColor: Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
@@ -30,13 +30,13 @@ class CustomGradientTextButton extends StatelessWidget {
         child: ShaderMask(
           blendMode: BlendMode.srcIn,
           shaderCallback: (Rect bounds) {
-            return LinearGradient(
+            return const LinearGradient(
               colors: [Color(0xFF0086EC), Color(0xFF6BECEC)],
             ).createShader(bounds);
           },
           child: Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),

@@ -1,22 +1,21 @@
 import 'package:camel_trace/Combonet/my_widget.dart';
 import 'package:camel_trace/Helpers/drawer_Widets.dart';
-import 'package:camel_trace/modles/shepherdModel.dart';
-import 'package:camel_trace/views/shepherds/add_shepherd.dart';
-import 'package:camel_trace/views/shepherds/edit_shepherd.dart';
+import 'package:camel_trace/modles/camelModel.dart';
+import 'package:camel_trace/views/camel/add_camel.dart';
+import 'package:camel_trace/views/camel/edit_camel.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ShepherdList extends StatefulWidget {
-  const ShepherdList({super.key});
-
+class CamelList extends StatefulWidget {
+  const CamelList({super.key});
   @override
-  State<ShepherdList> createState() => _ShepherdListState();
+  State<CamelList> createState() => _CamelListState();
 }
 
-class _ShepherdListState extends State<ShepherdList> {
+class _CamelListState extends State<CamelList> {
   var ownerId = "";
-  var models = <ShepherdModel>[];
+  var models = <CamelModel>[];
   @override
   void initState() {
     SharedPreferences.getInstance().then((value) {
@@ -24,7 +23,8 @@ class _ShepherdListState extends State<ShepherdList> {
         ownerId = value.getString("userId") ?? "";
       });
     });
-    getShepherdsData();
+    models.clear();
+    getCamelsData();
     super.initState();
   }
 
@@ -37,15 +37,15 @@ class _ShepherdListState extends State<ShepherdList> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const AddShepherd()));
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => const AddCamel()));
         },
       ),
       body: Container(
         child: models.isEmpty
             ? Container(
                 alignment: Alignment.center,
-                child: const Text("no shephered data to represent"),
+                child: const Text("no camel data to represent"),
               )
             : ListView.builder(
                 itemCount: models.length,
@@ -54,14 +54,14 @@ class _ShepherdListState extends State<ShepherdList> {
                     margin: const EdgeInsets.fromLTRB(2, 2, 2, 3),
                     child: ListTile(
                       leading: CircleAvatar(
-                        child: Text(models[index].name[0]),
+                        child: Text(models[index].hardWareNumber),
                       ),
-                      title: Text(models[index].name),
+                      title: Text(models[index].camelNumber),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(models[index].identityId),
-                          Text(models[index].camelCounts),
+                          Text(models[index].age),
+                          Text(models[index].price),
                         ],
                       ),
                       trailing: IconButton(
@@ -70,7 +70,7 @@ class _ShepherdListState extends State<ShepherdList> {
                               context, "are you sure to delete ?", () {
                             FirebaseDatabase.instance
                                 .ref()
-                                .child("shepherd")
+                                .child("camel")
                                 .child(ownerId)
                                 .child(models[index].id)
                                 .remove()
@@ -95,7 +95,7 @@ class _ShepherdListState extends State<ShepherdList> {
                       ),
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => EditShepherd(
+                            builder: (context) => EditCamel(
                                   model: models.elementAt(index),
                                 )));
                       },
@@ -106,51 +106,29 @@ class _ShepherdListState extends State<ShepherdList> {
     );
   }
 
-  getShepherdsData() {
-    var shepherds = [ShepherdModel.empty()];
+  getCamelsData() {
+    var camelArray = [CamelModel.empty()];
     FirebaseDatabase.instance
         .ref()
-        .child("shepherd")
+        .child("camel")
         .child(ownerId)
         .get()
         .then((value) {
       if (value.exists) {
-        shepherds.clear();
+        camelArray.clear();
         for (var element in value.children) {
           for (var item in element.children) {
             print(item.value);
-            shepherds.add(ShepherdModel.fromJson(item.value as Map));
+            camelArray.add(CamelModel.fromJson(item.value as Map));
           }
         }
       }
       setState(() {
         models.clear();
-        models = shepherds;
+        models = camelArray;
       });
     }).onError((error, stackTrace) {
       print("error in geting shepherd List ${error.toString()}");
-    });
-  }
-
-  updateShepherdsData() {
-    var shepherds = [ShepherdModel.empty()];
-    FirebaseDatabase.instance
-        .ref()
-        .child("shepherd")
-        .child(ownerId)
-        .onValue
-        .listen((event) {
-      shepherds.clear();
-      for (var element in event.snapshot.children) {
-        for (var item in element.children) {
-          print(item.value);
-          shepherds.add(ShepherdModel.fromJson(item.value as Map));
-        }
-      }
-      setState(() {
-        models.clear();
-        models = shepherds;
-      });
     });
   }
 }

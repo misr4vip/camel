@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:camel_trace/Helpers/const.dart';
-import 'package:camel_trace/Combonet/gredent.dart';
 import 'package:camel_trace/Combonet/unicornOutLineButton.dart';
 
 import '../Helpers/gradiantext.dart';
@@ -136,27 +135,31 @@ class MyWidgets {
       ),
     );
   }
-Widget regularEditText(TextEditingController controller,String title,{IconData icon = Icons.abc}){
- return Padding(
-      padding: const EdgeInsets.only(left: 30, right: 30),
-      child: TextFormField(
-        validator: (value) {
-          if (value!.isEmpty || value.length < 3) {
-            return "name should at least  have 3 letters.";
-          }
-          return null;
-        },
-        controller: controller,
-        decoration:  InputDecoration(
-          labelText: title,
-          prefixIcon: Padding(
-            padding:
-            const EdgeInsets.only(top: 5), // add padding to adjust icon
-            child: Icon(icon),
+
+  Widget regularEditText(TextEditingController controller, String title,
+      {IconData icon = Icons.abc, isObscure = false}) {
+    return Padding(
+        padding: const EdgeInsets.only(left: 30, right: 30),
+        child: TextFormField(
+          validator: (value) {
+            if (value!.isEmpty || value.length < 3) {
+              return "name should at least  have 3 letters.";
+            }
+            return null;
+          },
+          controller: controller,
+          decoration: InputDecoration(
+            labelText: title,
+            prefixIcon: Padding(
+              padding:
+                  const EdgeInsets.only(top: 5), // add padding to adjust icon
+              child: Icon(icon),
+            ),
           ),
-        ),
-      ));
-}
+          obscureText: isObscure,
+        ));
+  }
+
   showAlertDialog(
       BuildContext context, String message, VoidCallback onOKPressed) {
     // set up the button
@@ -181,9 +184,7 @@ Widget regularEditText(TextEditingController controller,String title,{IconData i
           fontSize: 15,
         ),
       ),
-      actions: [
-        okButton,
-      ],
+      actions: [okButton],
     );
 
     // show the dialog
@@ -200,40 +201,23 @@ Widget regularEditText(TextEditingController controller,String title,{IconData i
     );
   }
 
-  showAlertDialogWithCancel(
+  showAlertDialogOkCancel(
       BuildContext context, String message, VoidCallback onOKPressed) {
-    var buttonStyleOK = const TextStyle(
-      color: Colors.blue,
-      fontSize: 18,
-      fontWeight: FontWeight.bold,
-    );
-    var buttonStyleCancel = const TextStyle(
-      color: Colors.blue,
-      fontSize: 18,
-      fontWeight: FontWeight.bold,
-    );
-
     // set up the button
     Widget okButton = TextButton(
-      child: constText(
-        "OK",
-        style: buttonStyleOK,
-      ),
       onPressed: onOKPressed,
+      child: const Text("OK"),
     );
     Widget cancelButton = TextButton(
-      child: Text(
+      child: const Text(
         "Cancel",
-        style: buttonStyleCancel,
       ),
       onPressed: () {
-        Navigator.pop(context);
+        Navigator.of(context).pop();
       },
     );
-
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      insetPadding: const EdgeInsets.all(0),
       title: Text(
         Cons.appName,
         style: const TextStyle(
@@ -244,14 +228,11 @@ Widget regularEditText(TextEditingController controller,String title,{IconData i
       content: Text(
         message,
         style: const TextStyle(
-          fontSize: 16,
-          color: Colors.black87,
+          color: Colors.black,
+          fontSize: 15,
         ),
       ),
-      actions: [
-        okButton,
-        cancelButton,
-      ],
+      actions: [okButton, cancelButton],
     );
 
     // show the dialog
@@ -267,18 +248,6 @@ Widget regularEditText(TextEditingController controller,String title,{IconData i
       },
     );
   }
-
-  // showCustomToast(String message, [Color? mColor]) {
-  //   mColor ??= const Color.fromARGB(153, 26, 20, 219);
-  //   Fluttertoast.showToast(
-  //     msg: message,
-  //     toastLength: Toast.LENGTH_LONG,
-  //     gravity: ToastGravity.BOTTOM,
-  //     timeInSecForIosWeb: 1,
-  //     fontSize: 16.0,
-  //     textColor: Colors.white,
-  //   );
-  // }
 
   Widget addDropDownList(String dropDownText, Function(dynamic)? callBack,
       List<DropdownMenuItem<dynamic>> items) {

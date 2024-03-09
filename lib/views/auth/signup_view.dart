@@ -5,8 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../Combonet/mywedjet.dart';
+import '../../Combonet/my_widget.dart';
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
@@ -29,31 +28,36 @@ class _SignupState extends State<SignupView> {
     return Form(
       key: _formKey,
       child: Column(children: [
-       h.regularEditText(emailController, "email"),
+        h.regularEditText(emailController, "email", icon: Icons.email),
         const SizedBox(height: 18),
-      h.regularEditText(phoneController, "Phone number"),
+        h.regularEditText(phoneController, "Phone number", icon: Icons.phone),
         const SizedBox(height: 18),
-        h.regularEditText(nameController, "owner name"),
+        h.regularEditText(nameController, "owner name", icon: Icons.person),
         const SizedBox(height: 18),
-       h.regularEditText(passwordController, "password"),
+        h.regularEditText(passwordController, "password",
+            icon: Icons.password, isObscure: true),
         const SizedBox(
           height: 18,
         ),
-       h.regularEditText(rePasswordController, "confirm password"),
+        h.regularEditText(rePasswordController, "confirm password",
+            icon: Icons.password, isObscure: true),
         const SizedBox(height: 18),
         h.addButton(Cons.signUp, () {
-          f().then((value) => {
-            createUser(value[true]).then((value)  {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => const OwnerMain()));
-            }).onError((error, stackTrace) {
-              h.showAlertDialog(context, error.toString(), () {
-                Navigator.of(context).pop();
-              });
-            })
-          }).onError((error, stackTrace) =>  h.showAlertDialog(context, error.toString(), () {
-            Navigator.of(context).pop();
-          }));
+          f()
+              .then((value) => {
+                    createUser(value[true]).then((value) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const OwnerMain()));
+                    }).onError((error, stackTrace) {
+                      h.showAlertDialog(context, error.toString(), () {
+                        Navigator.of(context).pop();
+                      });
+                    })
+                  })
+              .onError((error, stackTrace) =>
+                  h.showAlertDialog(context, error.toString(), () {
+                    Navigator.of(context).pop();
+                  }));
         }),
       ]),
     );
@@ -72,15 +76,12 @@ class _SignupState extends State<SignupView> {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: emailController.text, password: passwordController.text)
-          .then((value)
-              {
-                user.id = value.user!.uid;
-                result.putIfAbsent(true, () => user);
-              })
-          .onError((error, stackTrace)
-              {
-                result.putIfAbsent(false, () => error!.toString());
-              });
+          .then((value) {
+        user.id = value.user!.uid;
+        result.putIfAbsent(true, () => user);
+      }).onError((error, stackTrace) {
+        result.putIfAbsent(false, () => error!.toString());
+      });
     } else {
       result.putIfAbsent(false, () => "error in Form State");
     }
@@ -90,19 +91,17 @@ class _SignupState extends State<SignupView> {
   Future<bool> createUser(UserModel user) async {
     var result = true;
     var ref = FirebaseDatabase.instance.ref().child("users").child(user.id);
-    await ref.set(user.toJson()).then((value)  async {
-        final prefs = await SharedPreferences.getInstance();
-    await prefs.setString("userId", user.id);
-    await prefs.setString("userName", user.name);
-    await prefs.setString("userType", user.userType);
-    await prefs.setString("userPassword", user.password);
-    await prefs.setString("userPhone", user.phone);
-    await prefs.setString("userEmail", user.email);
-        });
+    await ref.set(user.toJson()).then((value) async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString("userId", user.id);
+      await prefs.setString("userName", user.name);
+      await prefs.setString("userType", user.userType);
+      await prefs.setString("userPassword", user.password);
+      await prefs.setString("userPhone", user.phone);
+      await prefs.setString("userEmail", user.email);
+    });
     return result;
   }
-
-
 }
 
 // await FirebaseAuth.instance.verifyPhoneNumber(

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-Color lightblue = Color.fromRGBO(102, 231, 237, 1);
-Color darkblue = Color.fromRGBO(3, 137, 237, 1);
-Color black = Color.fromARGB(255, 37, 38, 39);
-Color gray = Color(0xFF999999);
-Color grren = Color(0xFF2CDF00);
-Color black26 = Color(0xFF475F7B);
+Color lightblue = const Color.fromRGBO(102, 231, 237, 1);
+Color darkblue = const Color.fromRGBO(3, 137, 237, 1);
+Color black = const Color.fromARGB(255, 37, 38, 39);
+Color gray = const Color(0xFF999999);
+Color grren = const Color(0xFF2CDF00);
+Color black26 = const Color(0xFF475F7B);
 Image cheekblack = Image.asset("images/Sheek.png");
 Image cheekbGreen = Image.asset("images/chekgreen.png");
 
-var gradient = LinearGradient(
+var gradient = const LinearGradient(
   colors: [Color(0xFF0086EC), Color(0xFF6BECEC)],
 );
 
@@ -48,7 +48,7 @@ TextStyle h2bl = TextStyle(
   fontWeight: FontWeight.w500,
   height: 0.11,
 );
-TextStyle h2green = TextStyle(
+TextStyle h2green = const TextStyle(
   color: Color(0xFF2CDF00),
   fontSize: 13,
   fontFamily: 'Roboto',
@@ -56,21 +56,21 @@ TextStyle h2green = TextStyle(
   height: 0.13,
   letterSpacing: 0.46,
 );
-TextStyle h2black = TextStyle(
+TextStyle h2black = const TextStyle(
   color: Colors.black,
   fontSize: 18,
   fontFamily: 'Cairo',
   fontWeight: FontWeight.w700,
   height: 0.05,
 );
-TextStyle h3 = TextStyle(
+TextStyle h3 = const TextStyle(
   color: Colors.white,
   fontSize: 16,
   fontFamily: './assets/fonts/Cairo-SemiBold.ttf',
   height: 0.07,
   fontWeight: FontWeight.w500,
 );
-TextStyle h4 = TextStyle(
+TextStyle h4 = const TextStyle(
   color: Colors.white,
   fontSize: 8,
   fontFamily: './assets/fonts/Cairo-SemiBold.ttf',
@@ -116,7 +116,7 @@ TextStyle h6black = TextStyle(
 
 AppBar myappBar = AppBar(
   leading: IconButton(
-      icon: Icon(Icons.notifications_active,
+      icon: const Icon(Icons.notifications_active,
           color: Color.fromARGB(255, 230, 224, 224)),
       onPressed: () {}),
   title: Image.asset(
@@ -142,30 +142,30 @@ Drawer mydrawer = Drawer(
     Center(
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
-          CircleAvatar(
+          const CircleAvatar(
             radius: 50.0,
             backgroundImage: NetworkImage(
               "https://example.com/image.png",
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           Text(
             "الاسم",
             style: h3,
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           Text(
             "مراجع",
             style: h4,
           ),
-          SizedBox(
+          const SizedBox(
             height: 18,
           ),
           ListTile(

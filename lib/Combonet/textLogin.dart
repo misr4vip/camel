@@ -6,7 +6,7 @@ class textLogin extends StatelessWidget {
   final double Size;
 
 
-   textLogin(String s, {super.key, required this.text, required this.color, required this.Size});
+   const textLogin(String s, {super.key, required this.text, required this.color, required this.Size});
 
   @override
   Widget build(BuildContext context) {

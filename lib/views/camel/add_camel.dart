@@ -1,24 +1,28 @@
 import 'package:camel_trace/Combonet/my_widget.dart';
-import 'package:camel_trace/modles/shepherdModel.dart';
+import 'package:camel_trace/Helpers/const.dart';
+import 'package:camel_trace/Helpers/drawer_Widets.dart';
+import 'package:camel_trace/modles/camelModel.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
-import '../../Helpers/const.dart';
-import '../../Helpers/drawer_Widets.dart';
 
-class AddShepherd extends StatefulWidget {
-  const AddShepherd({super.key});
+class AddCamel extends StatefulWidget {
+  const AddCamel({super.key});
 
   @override
-  State<AddShepherd> createState() => _AddShepherdState();
+  State<AddCamel> createState() => _AddCamelState();
 }
 
-class _AddShepherdState extends State<AddShepherd> {
+class _AddCamelState extends State<AddCamel> {
   var ownerId = "";
-  var nameController = TextEditingController();
-  var idController = TextEditingController();
-  var numberOfCamelsController = TextEditingController();
+  var camelNumberController = TextEditingController();
+  var hardWareNumberController = TextEditingController();
+  var ageController = TextEditingController();
+  var healthController = TextEditingController();
+  var vaccinationController = TextEditingController();
+  var priceController = TextEditingController();
+
   @override
   void initState() {
     SharedPreferences.getInstance().then((value) {
@@ -40,36 +44,40 @@ class _AddShepherdState extends State<AddShepherd> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            w.regularEditText(nameController, "shepherd name",
+            w.regularEditText(camelNumberController, "shepherd name",
                 icon: Icons.person),
             const SizedBox(height: 18),
-            w.regularEditText(idController, "shepherd Identity number",
+            w.regularEditText(hardWareNumberController, "hardware number",
                 icon: Icons.note),
             const SizedBox(height: 18),
-            w.regularEditText(numberOfCamelsController, "number of camels",
+            w.regularEditText(ageController, "age", icon: Icons.numbers),
+            const SizedBox(height: 18),
+            w.regularEditText(healthController, "health", icon: Icons.numbers),
+            const SizedBox(height: 18),
+            w.regularEditText(vaccinationController, "vaccine",
                 icon: Icons.numbers),
+            const SizedBox(height: 18),
+            w.regularEditText(priceController, "price", icon: Icons.numbers),
             const SizedBox(height: 18),
             ElevatedButton(
               onPressed: () {
-                var shepherdId = Uuid().v1();
-                var model = ShepherdModel(
-                    id: shepherdId,
-                    name: nameController.text,
-                    identityId: idController.text,
-                    camelCounts: numberOfCamelsController.text);
+                var id = Uuid().v1();
+                var model = CamelModel(
+                    id: id,
+                    camelNumber: camelNumberController.text,
+                    hardWareNumber: hardWareNumberController.text,
+                    age: ageController.text,
+                    health: healthController.text,
+                    vaccination: vaccinationController.text,
+                    price: priceController.text);
                 FirebaseDatabase.instance
                     .ref()
-                    .child("shepherd")
+                    .child("camel")
                     .child(ownerId)
-                    .child(shepherdId)
+                    .child(id)
                     .set(model.toJson())
                     .then((value) {
-                  w.showAlertDialog(context, "shepherd added successfully!",
-                      () {
-                    Navigator.of(context).pop();
-                    nameController.text = "";
-                    idController.text = "";
-                    numberOfCamelsController.text = "";
+                  w.showAlertDialog(context, "Camel added successfully!", () {
                     Navigator.of(context).pop();
                   });
                 }).onError((error, stackTrace) {

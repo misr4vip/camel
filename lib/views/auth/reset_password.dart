@@ -12,14 +12,14 @@ class _ResetPasswordState extends State<ResetPassword> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-            body: Container(
+            body: SizedBox(
       width: 400,
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("welcome"),
-            IconButton(onPressed: () => null, icon: Icon(Icons.phone))
+            const Text("welcome"),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.phone))
           ]),
     )));
   }

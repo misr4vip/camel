@@ -1,6 +1,5 @@
 import 'package:camel_trace/firebase_options.dart';
 import 'package:camel_trace/views/auth/auth.dart';
-import 'package:camel_trace/views/auth/reset_password.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
