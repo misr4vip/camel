@@ -86,7 +86,7 @@ class _EditShepherdState extends State<EditShepherd> {
                 textStyle:
                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              child: const Text("Update"),
+              child: Text(Cons.update),
             )
           ],
         ),

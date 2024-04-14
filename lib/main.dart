@@ -1,11 +1,15 @@
+import 'package:alarm/alarm.dart';
 import 'package:camel_trace/firebase_options.dart';
 import 'package:camel_trace/views/auth/auth.dart';
+import 'package:camel_trace/views/reminder/add_reminder.dart';
+import 'package:camel_trace/views/reminder/reminders.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Alarm.init();
   runApp(const MyApp());
 }
 

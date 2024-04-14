@@ -19,7 +19,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.2.3 <4.0.0"
+  sdk: ">=3.3.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,9 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  flutter_map: ^6.1.0
+  flutter_map_tappable_polyline: any
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.17.4
   firebase_database: ^10.4.6
@@ -40,6 +39,15 @@ dependencies:
   shared_preferences: ^2.2.2
   profile_image_selector: ^0.0.1
   uuid: ^4.3.3
+  scroll_date_picker: ^3.8.0
+  fast_color_picker: ^0.1.1
+  intl: ^0.18.1
+  alarm: ^3.0.14
+  flutter_calendar_carousel: ^2.4.2
+  latlong2: ^0.9.1
+  url_launcher: ^6.0.7
+  flutter_map_polywidget: ^1.0.1
+  flutter_native_splash: ^2.4.0
 
 dev_dependencies:
   flutter_test:
@@ -93,3 +101,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_native_splash:
+  background_image: "images/entrance.png"

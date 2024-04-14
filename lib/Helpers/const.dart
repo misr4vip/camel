@@ -1,4 +1,3 @@
-
 import 'dart:ui';
 
 class Cons {
@@ -15,12 +14,13 @@ class Cons {
   static String optional = "Optional";
   static String signUp = 'Sign up';
   static String save = "Save";
-
+  static String update = "Update";
 
   static String thisFieldRequired = 'this Field required';
   static String emailIsInvalid = 'email is invalid';
   static String passwordInvalid = 'password invalid';
-  static String confirmPasswordNotMatched = "password doesn't match confirm password ";
+  static String confirmPasswordNotMatched =
+      "password doesn't match confirm password ";
 
   ////// Colors
 

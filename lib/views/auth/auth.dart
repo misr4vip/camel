@@ -90,8 +90,8 @@ class _AuthState extends State<Auth> {
           left: 0.0,
           right: 0.0,
           child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            decoration: BoxDecoration(
+              color: Color(Cons.whiteColor),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30.0),
                 topRight: Radius.circular(30.0),

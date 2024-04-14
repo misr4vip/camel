@@ -2,6 +2,8 @@ import 'package:camel_trace/views/auth/auth.dart';
 import 'package:camel_trace/views/auth/profile.dart';
 import 'package:camel_trace/views/camel/camel_list.dart';
 import 'package:camel_trace/views/owner_main_view.dart';
+import 'package:camel_trace/views/reminder/add_reminder.dart';
+import 'package:camel_trace/views/reminder/reminders.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -142,6 +144,24 @@ class _HelperState extends State<Helper> {
                             builder: (context) => const Profile()));
                       },
                       child: const Text("profile",
+                          style: TextStyle(fontSize: 18, color: Colors.blue)))
+                ],
+              ),
+            ),
+            const Divider(
+              color: Colors.black12,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Row(
+                children: [
+                  const Icon(Icons.person, size: 32),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const Reminders()));
+                      },
+                      child: const Text("reminders",
                           style: TextStyle(fontSize: 18, color: Colors.blue)))
                 ],
               ),

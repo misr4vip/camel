@@ -136,8 +136,15 @@ class MyWidgets {
     );
   }
 
-  Widget regularEditText(TextEditingController controller, String title,
-      {IconData icon = Icons.abc, isObscure = false}) {
+  Widget regularEditText(
+    TextEditingController controller,
+    String title, {
+    IconData icon = Icons.abc,
+    isObscure = false,
+    VoidCallback? TappedFunction,
+    bool isReadOnly = false,
+    bool showCurser = true,
+  }) {
     return Padding(
         padding: const EdgeInsets.only(left: 30, right: 30),
         child: TextFormField(
@@ -148,6 +155,8 @@ class MyWidgets {
             return null;
           },
           controller: controller,
+          readOnly: isReadOnly,
+          showCursor: showCurser,
           decoration: InputDecoration(
             labelText: title,
             prefixIcon: Padding(
@@ -156,6 +165,7 @@ class MyWidgets {
               child: Icon(icon),
             ),
           ),
+          onTap: TappedFunction,
           obscureText: isObscure,
         ));
   }
