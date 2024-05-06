@@ -2,8 +2,8 @@ import 'package:camel_trace/views/auth/auth.dart';
 import 'package:camel_trace/views/auth/profile.dart';
 import 'package:camel_trace/views/camel/camel_list.dart';
 import 'package:camel_trace/views/owner_main_view.dart';
-import 'package:camel_trace/views/reminder/add_reminder.dart';
 import 'package:camel_trace/views/reminder/reminders.dart';
+import 'package:camel_trace/views/reminder/shepherd_add_reminder.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,7 +41,7 @@ class _HelperState extends State<Helper> {
         child: Column(
           children: [
             Container(
-              color: Color(Cons.btnColor),
+              color: secondaryColor,
               width: double.infinity,
               height: 170,
               alignment: Alignment.bottomCenter,
@@ -72,7 +72,19 @@ class _HelperState extends State<Helper> {
               ),
             ),
             const SizedBox(
-              height: 50,
+              height: 5,
+            ),
+            Center(
+              child: Text(
+                "${userType.toUpperCase()} DASHBOARD",
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 40,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16.0),
@@ -81,7 +93,7 @@ class _HelperState extends State<Helper> {
                   const Icon(Icons.home, size: 32),
                   TextButton(
                       onPressed: () {
-                        if (userType == "owner") {
+                        if (userType == "owner" || userType == "shepherd") {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const OwnerMain()));
                         }
@@ -94,45 +106,63 @@ class _HelperState extends State<Helper> {
             const Divider(
               color: Colors.black12,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: Row(
-                children: [
-                  const Icon(Icons.people, size: 32),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ShepherdList()));
-                      },
-                      child: const Text("Shepherds",
-                          style: TextStyle(fontSize: 18, color: Colors.blue)))
-                ],
-              ),
-            ),
-            const Divider(
-              color: Colors.black12,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: Row(
-                children: [
-                  Image.asset(
-                    "images/camel.png",
-                    height: 32,
+            userType == "owner"
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.people, size: 32),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const ShepherdList()));
+                            },
+                            child: const Text("Shepherds",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.blue)))
+                      ],
+                    ),
+                  )
+                : const SizedBox(
+                    height: 0,
                   ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const CamelList()));
-                      },
-                      child: const Text("Camels",
-                          style: TextStyle(fontSize: 18, color: Colors.blue)))
-                ],
-              ),
-            ),
-            const Divider(
-              color: Colors.black12,
-            ),
+            userType == "owner"
+                ? const Divider(
+                    color: Colors.black12,
+                  )
+                : const SizedBox(
+                    height: 0,
+                  ),
+            userType == "owner"
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "images/camel.png",
+                          height: 32,
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const CamelList()));
+                            },
+                            child: const Text("Camels",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.blue)))
+                      ],
+                    ),
+                  )
+                : const SizedBox(
+                    height: 0,
+                  ),
+            userType == "owner"
+                ? const Divider(
+                    color: Colors.black12,
+                  )
+                : const SizedBox(
+                    height: 0,
+                  ),
             Padding(
               padding: const EdgeInsets.only(left: 16.0),
               child: Row(
@@ -169,6 +199,36 @@ class _HelperState extends State<Helper> {
             const Divider(
               color: Colors.black12,
             ),
+            userType == "shepherd"
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.time_to_leave, size: 32),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ShepherdAddReminder()));
+                            },
+                            child: const Text(
+                              "reminders",
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.blue),
+                            ))
+                      ],
+                    ),
+                  )
+                : const SizedBox(
+                    height: 0,
+                  ),
+            userType == "shepherd"
+                ? const Divider(
+                    color: Colors.black12,
+                  )
+                : const SizedBox(
+                    height: 0,
+                  ),
             Padding(
               padding: const EdgeInsets.only(left: 16.0),
               child: Row(
@@ -178,7 +238,7 @@ class _HelperState extends State<Helper> {
                       onPressed: () {
                         FirebaseAuth.instance.signOut();
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const Auth(title: "login")));
+                            builder: (context) => const Auth()));
                       },
                       child: const Text(
                         "log out",
@@ -192,8 +252,8 @@ class _HelperState extends State<Helper> {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(Cons.btnSecondaryColor),
-                  foregroundColor: Color(Cons.whiteColor),
+                  backgroundColor: secondaryColor,
+                  foregroundColor: whiteColor,
                 ),
                 child: const Text("Delete Account"),
               ),

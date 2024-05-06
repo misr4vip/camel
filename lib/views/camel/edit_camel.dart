@@ -42,8 +42,14 @@ class _EditCamelState extends State<EditCamel> {
   Widget build(BuildContext context) {
     var w = MyWidgets(context: context);
     return Scaffold(
-      drawer: const Helper(),
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: Container(
         alignment: Alignment.center,
         child: SingleChildScrollView(
@@ -94,7 +100,7 @@ class _EditCamelState extends State<EditCamel> {
                   });
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(Cons.btnColor),
+                  backgroundColor: lightOrangeColor,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                   textStyle: const TextStyle(

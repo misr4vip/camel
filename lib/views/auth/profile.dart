@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:profile_image_selector/profile_image_selector.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Combonet/my_widget.dart';
-import '../../Helpers/drawer_Widets.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -46,11 +45,16 @@ class _ProfileState extends State<Profile> {
     var w = MyWidgets(context: context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(Cons.backGroundColor),
+        backgroundColor: lightOrangeColor,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
-      drawer: const Helper(),
       body: Container(
-        color: Color(Cons.whiteColor),
+        color: whiteColor,
         child: Form(
           key: _formKey,
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -99,7 +103,7 @@ class _ProfileState extends State<Profile> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(Cons.btnColor),
+                backgroundColor: lightOrangeColor,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                 textStyle:

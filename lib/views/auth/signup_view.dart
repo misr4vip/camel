@@ -1,10 +1,9 @@
 import 'package:camel_trace/Helpers/const.dart';
+import 'package:camel_trace/Helpers/validation.dart';
 import 'package:camel_trace/modles/UserModel.dart';
-import 'package:camel_trace/views/owner_main_view.dart';
+import 'package:camel_trace/views/auth/otp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../Combonet/my_widget.dart';
 
 class SignupView extends StatefulWidget {
@@ -20,7 +19,11 @@ class _SignupState extends State<SignupView> {
   var nameController = TextEditingController();
   var rePasswordController = TextEditingController();
   var passwordController = TextEditingController();
+  bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
+  final _auth = FirebaseAuth.instance;
+  String _verificationId = "";
+  String password = "";
 
   @override
   Widget build(BuildContext context) {
@@ -28,86 +31,151 @@ class _SignupState extends State<SignupView> {
     return Form(
       key: _formKey,
       child: Column(children: [
-        h.regularEditText(emailController, "email", icon: Icons.email),
-        const SizedBox(height: 18),
-        h.regularEditText(phoneController, "Phone number", icon: Icons.phone),
-        const SizedBox(height: 18),
-        h.regularEditText(nameController, "owner name", icon: Icons.person),
-        const SizedBox(height: 18),
-        h.regularEditText(passwordController, "password",
-            icon: Icons.password, isObscure: true),
-        const SizedBox(
-          height: 18,
+        h.regularEditText(
+          emailController,
+          "email",
+          icon: Icons.email,
+          onCodeChanged: (p0) {
+            if (isEmpty(p0!)) {
+              return " email cann't be empty!";
+            }
+            if (!validateEmail(p0)) {
+              return "Please enter a valid email";
+            }
+            return null;
+          },
         ),
-        h.regularEditText(rePasswordController, "confirm password",
-            icon: Icons.password, isObscure: true),
+        const SizedBox(height: 18),
+        h.regularEditText(
+          phoneController,
+          "Phone number ex 05xxxxxxxx",
+          icon: Icons.phone,
+          onCodeChanged: (p0) {
+            if (isEmpty(p0!)) {
+              return "Please enter a valid phone number";
+            }
+            if (p0.length != 10) {
+              return " phone number should be 10 numbers ";
+            }
+            if (!p0.startsWith('0')) {
+              return " phone number should be start with 0";
+            }
+            if (!validatePhoneNumber(p0)) {
+              return "Please enter a valid phone number";
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 18),
+        h.regularEditText(
+          nameController,
+          "owner name",
+          icon: Icons.person,
+          onCodeChanged: (p0) {
+            if (isEmpty(p0!)) {
+              return "Please enter a valid name";
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 18),
+        h.regularEditText(
+          passwordController,
+          "password",
+          icon: Icons.password,
+          isObscure: _obscureText,
+          suffixIcon: IconButton(
+              icon:
+                  Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+              onPressed: () {
+                setState(() {
+                  _obscureText = !_obscureText;
+                });
+              }),
+          onCodeChanged: (p0) {
+            if (isEmpty(p0!)) {
+              return "Please enter a valid password";
+            }
+            if (validatePassword(p0)) {
+              return "password length should be 8 or more \n password should have Capital and small letter ";
+            }
+            setState(() {
+              password = p0;
+            });
+            return null;
+          },
+        ),
+        const SizedBox(height: 18),
+        h.regularEditText(
+          rePasswordController,
+          "confirm password",
+          icon: Icons.password,
+          isObscure: _obscureText,
+          onCodeChanged: (p0) {
+            if (isEmpty(p0!)) {
+              return "Please enter a valid confirm password";
+            }
+            if (!validateConfirmPassword(password, p0)) {
+              return "password length should be 8 or more \npassword should have Capital and small letter ";
+            }
+            return null;
+          },
+        ),
         const SizedBox(height: 18),
         h.addButton(Cons.signUp, () {
-          f()
-              .then((value) => {
-                    createUser(value[true]).then((value) {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const OwnerMain()));
-                    }).onError((error, stackTrace) {
-                      h.showAlertDialog(context, error.toString(), () {
-                        Navigator.of(context).pop();
-                      });
-                    })
-                  })
-              .onError((error, stackTrace) =>
-                  h.showAlertDialog(context, error.toString(), () {
-                    Navigator.of(context).pop();
-                  }));
+          if (_formKey.currentState!.validate()) {
+            _verifyPhoneNumber(context, phoneController.text);
+          }
         }),
       ]),
     );
   }
 
-  Future f() async {
-    var result = <bool, dynamic>{};
-    if (_formKey.currentState!.validate()) {
-      var user = UserModel(
-          id: "",
-          name: nameController.text,
-          email: emailController.text,
-          phone: phoneController.text,
-          userType: "owner",
-          password: passwordController.text);
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text)
-          .then((value) {
-        user.id = value.user!.uid;
-        result.putIfAbsent(true, () => user);
-      }).onError((error, stackTrace) {
-        result.putIfAbsent(false, () => error!.toString());
-      });
-    } else {
-      result.putIfAbsent(false, () => "error in Form State");
-    }
-    return result;
-  }
+  // Authentication via phone number
+  Future<void> _verifyPhoneNumber(
+      BuildContext context, String phoneNumber) async {
+    final phone = phoneNumber.substring(1);
+    try {
+      await _auth.verifyPhoneNumber(
+        phoneNumber: "+966$phone",
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await _auth.signInWithCredential(credential);
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          // Handle verification failure
+          AlertDialog(
+            title: const Text("Error"),
+            content: Text(e.toString()),
+          );
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          // Save the verification id to use it later
+          _verificationId = verificationId;
 
-  Future<bool> createUser(UserModel user) async {
-    var result = true;
-    var ref = FirebaseDatabase.instance.ref().child("users").child(user.id);
-    await ref.set(user.toJson()).then((value) async {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString("userId", user.id);
-      await prefs.setString("userName", user.name);
-      await prefs.setString("userType", user.userType);
-      await prefs.setString("userPassword", user.password);
-      await prefs.setString("userPhone", user.phone);
-      await prefs.setString("userEmail", user.email);
-    });
-    return result;
+          final hashed = hashPassword(passwordController.text);
+          var user = UserModel(
+              id: "",
+              name: nameController.text,
+              email: emailController.text,
+              phone: "+966$phone",
+              userType: "owner",
+              password: hashed);
+          // Navigate to the screen to input the code
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      Otp(verificationId: _verificationId, model: user)));
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          // Auto-resolution timed out, handle the issue here
+        },
+      );
+    } catch (e) {
+      AlertDialog(
+        title: const Text("Error"),
+        content: Text(e.toString()),
+      );
+    }
   }
 }
-
-// await FirebaseAuth.instance.verifyPhoneNumber(
-//   phoneNumber: phoneController.text,
-//   verificationCompleted: (PhoneAuthCredential credential) {},
-//   verificationFailed: (FirebaseAuthException e) {},
-//   codeSent: (String verificationId, int? resendToken) {},
-//   codeAutoRetrievalTimeout: (String verificationId) {},
-// );

@@ -6,16 +6,19 @@ class CamelModel {
   String health;
   String vaccination;
   String price;
+  String shepherdId;
+  String shepherdName;
 
-  CamelModel({
-    required this.id,
-    required this.camelNumber,
-    required this.hardWareNumber,
-    required this.age,
-    required this.health,
-    required this.vaccination,
-    required this.price,
-  });
+  CamelModel(
+      {required this.id,
+      required this.camelNumber,
+      required this.hardWareNumber,
+      required this.age,
+      required this.health,
+      required this.vaccination,
+      required this.price,
+      required this.shepherdId,
+      required this.shepherdName});
 
   factory CamelModel.fromJson(Map json) {
     return CamelModel(
@@ -26,6 +29,8 @@ class CamelModel {
       health: json["health"],
       vaccination: json["vaccination"],
       price: json["price"],
+      shepherdId: json["shepherdId"],
+      shepherdName: json["shepherdName"],
     );
   }
 
@@ -37,5 +42,7 @@ class CamelModel {
         "health": health,
         "vaccination": vaccination,
         "price": price,
+        "shepherdId": shepherdId,
+        "shepherdName": shepherdName,
       };
 }

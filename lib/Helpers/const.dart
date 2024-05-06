@@ -1,35 +1,30 @@
-import 'dart:ui';
+
+
+import 'package:flutter/material.dart';
 
 class Cons {
   ///// strings
   static String appName = 'CAMEL TRACK';
+  static String welcomeBack = "Welcome Back";
   static String email = 'Email Address';
   static String phoneNumber = "Phone Number";
   static String lastName = "Last name";
   static String firstName = "First name";
   static String password = "Password";
   static String rePassword = "Confirm password";
-  static String signIn = "Sign in";
+  static String signIn = "Log In";
   static String next = "Next";
   static String optional = "Optional";
   static String signUp = 'Sign up';
   static String save = "Save";
   static String update = "Update";
-
+  static String forgetPassword = "forget password?";
   static String thisFieldRequired = 'this Field required';
   static String emailIsInvalid = 'email is invalid';
   static String passwordInvalid = 'password invalid';
   static String confirmPasswordNotMatched =
       "password doesn't match confirm password ";
 
-  ////// Colors
-
-  static int mainColor = 0xff0389ED;
-  static int orangeColor = 0xff9D7A68;
-  static int whiteColor = 0xffffffff;
-  static int backGroundColor = 0xff96C7D3;
-  static int btnColor = 0xffDAAA79;
-  static int btnSecondaryColor = 0xffC38388;
 
   ///  regex
   static String emailRegex = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
@@ -58,3 +53,15 @@ class Cons {
     return colors.last;
   }
 }
+
+
+////// Colors
+const blueColor =  Color(0xff0389ED);
+const lightBrownColor =  Color(0xff9D7A68);
+const whiteColor =  Color(0xffffffff);
+const gray2Color =  Color(0xff96C7D3);
+const grayColor =  Color(0xff9DB5CD);
+const lightOrangeColor =  Color(0xffDAAA79);
+const darkOrangeColor =  Color(0xffB18065);
+const dark2OrangeColor =  Color(0xff9B5A36);
+const secondaryColor = Color(0xffC38388);

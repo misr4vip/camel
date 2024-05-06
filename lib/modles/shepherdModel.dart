@@ -3,12 +3,14 @@ class ShepherdModel {
   String name;
   String identityId;
   String camelCounts;
+  String mobile;
 
   ShepherdModel(
       {required this.id,
       required this.name,
       required this.identityId,
-      required this.camelCounts});
+      required this.camelCounts,
+      required this.mobile});
 
   factory ShepherdModel.fromJson(Map json) {
     return ShepherdModel(
@@ -16,6 +18,7 @@ class ShepherdModel {
       name: json["name"],
       identityId: json["identityId"],
       camelCounts: json["camelCounts"],
+      mobile: json["mobile"],
     );
   }
 
@@ -24,5 +27,6 @@ class ShepherdModel {
         "name": name,
         "identityId": identityId,
         "camelCounts": camelCounts,
+        "mobile": mobile,
       };
 }

@@ -5,11 +5,8 @@ import 'package:camel_trace/views/auth/signup_view.dart';
 import 'package:flutter/material.dart';
 
 class Auth extends StatefulWidget {
-  const Auth({
-    super.key,
-    required this.title,
-  });
-  final String title;
+  const Auth({super.key});
+
   @override
   State<Auth> createState() => _AuthState();
 }
@@ -33,7 +30,7 @@ class _AuthState extends State<Auth> {
             top: 0.0,
             child: Container(
               alignment: Alignment.center,
-              color: const Color(0xffA9BCCB),
+              color: grayColor,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -55,15 +52,13 @@ class _AuthState extends State<Auth> {
                               child: Text(
                                 Cons.signIn,
                                 style: TextStyle(
-                                    color: Color(isLogin
-                                        ? Cons.orangeColor
-                                        : Cons.whiteColor),
+                                    color:
+                                        isLogin ? lightOrangeColor : whiteColor,
                                     fontSize: 22),
                               )),
-                          Text(
+                          const Text(
                             "|",
-                            style: TextStyle(
-                                color: Color(Cons.whiteColor), fontSize: 22),
+                            style: TextStyle(color: whiteColor, fontSize: 22),
                           ),
                           TextButton(
                               onPressed: () {
@@ -74,9 +69,8 @@ class _AuthState extends State<Auth> {
                               child: Text(
                                 Cons.signUp,
                                 style: TextStyle(
-                                    color: Color(isLogin
-                                        ? Cons.whiteColor
-                                        : Cons.orangeColor),
+                                    color:
+                                        isLogin ? whiteColor : lightOrangeColor,
                                     fontSize: 22),
                               )),
                         ],
@@ -90,8 +84,8 @@ class _AuthState extends State<Auth> {
           left: 0.0,
           right: 0.0,
           child: Container(
-            decoration: BoxDecoration(
-              color: Color(Cons.whiteColor),
+            decoration: const BoxDecoration(
+              color: whiteColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30.0),
                 topRight: Radius.circular(30.0),

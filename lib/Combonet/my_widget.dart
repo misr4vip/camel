@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:camel_trace/Helpers/const.dart';
 import 'package:camel_trace/Combonet/unicornOutLineButton.dart';
-
 import '../Helpers/gradiantext.dart';
 
 class MyWidgets {
   MyWidgets({required this.context});
   final BuildContext context;
 
-  Widget addTitleTextView(String title) {
+  Widget addTitleTextView(String title, {Color color = whiteColor}) {
+    return Text(
+      title,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: color,
+        fontSize: 28,
+        fontFamily: 'Cairo',
+        fontWeight: FontWeight.w600,
+        height: 0.03,
+      ),
+    );
+  }
+
+  Widget addSubTitleTextView(String title) {
     return Text(
       title,
       textAlign: TextAlign.center,
       style: const TextStyle(
-        color: Color(0xFF0389ED),
+        color: darkOrangeColor,
         fontSize: 28,
         fontFamily: 'Cairo',
         fontWeight: FontWeight.w600,
@@ -89,14 +102,11 @@ class MyWidgets {
     );
   }
 
-  Widget addButton(String title, VoidCallback action) {
+  Widget addButton(String title, VoidCallback action,
+      {Color backgroundColor = lightOrangeColor}) {
     return Container(
       decoration: ShapeDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment(1.00, 0.00),
-          end: Alignment(-1, 0),
-          colors: [Color(0xFF0086EC), Color(0xFF6BECEC)],
-        ),
+        color: backgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -141,31 +151,28 @@ class MyWidgets {
     String title, {
     IconData icon = Icons.abc,
     isObscure = false,
-    VoidCallback? TappedFunction,
+    String? Function(String?)? onCodeChanged,
+    Widget? suffixIcon,
     bool isReadOnly = false,
     bool showCurser = true,
   }) {
     return Padding(
         padding: const EdgeInsets.only(left: 30, right: 30),
         child: TextFormField(
-          validator: (value) {
-            if (value!.isEmpty || value.length < 3) {
-              return "name should at least  have 3 letters.";
-            }
-            return null;
-          },
+          validator: onCodeChanged,
           controller: controller,
           readOnly: isReadOnly,
           showCursor: showCurser,
           decoration: InputDecoration(
             labelText: title,
+            suffixIcon: suffixIcon,
             prefixIcon: Padding(
               padding:
                   const EdgeInsets.only(top: 5), // add padding to adjust icon
               child: Icon(icon),
             ),
           ),
-          onTap: TappedFunction,
+          onChanged: onCodeChanged,
           obscureText: isObscure,
         ));
   }
